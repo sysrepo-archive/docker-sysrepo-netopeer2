@@ -24,7 +24,8 @@ RUN \
       sudo \
       python-setuptools \
       python-dev \
-      build-essential
+      build-essential \
+      swig
 
 # pyang
 RUN easy_install pip
