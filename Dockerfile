@@ -25,7 +25,9 @@ RUN \
       python-setuptools \
       python-dev \
       build-essential \
-      swig
+      swig \
+      bison \
+      flex
 
 # pyang
 RUN easy_install pip
