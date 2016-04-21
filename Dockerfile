@@ -26,7 +26,9 @@ RUN \
       python-dev \
       build-essential \
       bison \
-      flex
+      flex \
+      nodejs \
+      npm
 
 # pyang
 RUN easy_install pip
