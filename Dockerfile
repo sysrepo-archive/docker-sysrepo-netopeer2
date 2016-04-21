@@ -25,7 +25,6 @@ RUN \
       python-setuptools \
       python-dev \
       build-essential \
-      swig \
       bison \
       flex
 
@@ -48,6 +47,15 @@ RUN cat /home/netconf/.ssh/id_dsa.pub >> /home/netconf/.ssh/authorized_keys
 RUN sed -i s#/home/netconf:/bin/false#/home/netconf:/bin/bash# /etc/passwd
 
 RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
+
+# swig
+RUN \
+      cd /opt/dev && \
+      git clone https://github.com/swig/swig.git && cd swig && \
+      ./autogen.sh && \
+      ./configure --prefix=/usr && \
+      make -j2 && \
+      make install
 
 #cmocka
 RUN \
