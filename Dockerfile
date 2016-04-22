@@ -53,11 +53,13 @@ RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
 # swig
 RUN \
       cd /opt/dev && \
-      git clone https://github.com/swig/swig.git && cd swig && \
-      ./autogen.sh && \
-      ./configure --prefix=/usr && \
-      make -j2 && \
-      make install
+      wget http://downloads.sourceforge.net/swig/swig-3.0.8.tar.gz && \
+      tar -xvf swig-3.0.8.tar.gz && rm swig-3.0.8.tar.gz && cd swig-3.0.8 && \
+      ./configure --prefix=/usr --without-clisp --without-maximum-compile-warnings && \
+      make && \
+      make install && \
+      install -v -m755 -d /usr/share/doc/swig-3.0.8 && \
+      cp -v -R Doc/* /usr/share/doc/swig-3.0.8
 
 #cmocka
 RUN \
