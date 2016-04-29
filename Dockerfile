@@ -27,7 +27,9 @@ RUN \
       bison \
       flex \
       nodejs \
-      npm
+      npm \
+      luajit \
+      luarocks
 
 # pyang
 RUN easy_install pip
