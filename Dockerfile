@@ -161,8 +161,6 @@ RUN \
       make -j2 && \
       make install
 
-RUN sysrepoctl --install --yang=/opt/dev/sysrepo/yang/turing-machine.yang
-
 EXPOSE 6001
 CMD ["/usr/bin/sysrepod"]
 CMD ["/usr/bin/netopeer2-server", "-d"]
