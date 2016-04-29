@@ -12,7 +12,6 @@ RUN \
       automake \
       pkg-config \
       libgtk-3-dev \
-      cmake \
       make \
       vim \
       valgrind \
@@ -49,6 +48,16 @@ RUN cat /home/netconf/.ssh/id_dsa.pub >> /home/netconf/.ssh/authorized_keys
 RUN sed -i s#/home/netconf:/bin/false#/home/netconf:/bin/bash# /etc/passwd
 
 RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
+
+
+# upgrade cmake to 3.5
+RUN \
+      cd /opt/dev && \
+      wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz && \
+      tar -xvf cmake-3.5.2.tar.gz && rm cmake-3.5.2.tar.gz && cd cmake-3.5.2 && \
+      ./bootstrap && \
+      make -j2 && \
+      make install
 
 # swig
 RUN \
