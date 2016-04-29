@@ -51,6 +51,8 @@ RUN sed -i s#/home/netconf:/bin/false#/home/netconf:/bin/bash# /etc/passwd
 
 RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
 
+# fix nodejs name problem in ubunt
+RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
 # upgrade cmake to 3.5
 RUN \
