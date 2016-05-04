@@ -25,11 +25,7 @@ RUN \
       python-dev \
       build-essential \
       bison \
-      flex \
-      nodejs \
-      npm \
-      luajit \
-      luarocks
+      flex
 
 # pyang
 RUN easy_install pip
@@ -50,9 +46,6 @@ RUN cat /home/netconf/.ssh/id_dsa.pub >> /home/netconf/.ssh/authorized_keys
 RUN sed -i s#/home/netconf:/bin/false#/home/netconf:/bin/bash# /etc/passwd
 
 RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
-
-# fix nodejs name problem in ubunt
-RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
 # upgrade cmake to 3.5
 RUN \
@@ -110,6 +103,21 @@ RUN \
       ./configure --prefix=/usr && \
       make -j2 && \
       make install
+
+# install lua
+RUN \
+      apt-get update && apt-get install -y \
+      luajit \
+      luarocks
+
+# install node v5.x
+RUN \
+     curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - && \
+     sudo apt-get install -y nodejs && \
+     npm install -g node-gyp
+
+# fix nodejs name problem in ubunt
+RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
 # libredblack
 RUN \
