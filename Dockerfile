@@ -47,6 +47,9 @@ RUN sed -i s#/home/netconf:/bin/false#/home/netconf:/bin/bash# /etc/passwd
 
 RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
 
+# set root password to root
+RUN echo "root:root" | chpasswd
+
 # upgrade cmake to 3.5
 RUN \
       cd /opt/dev && \
