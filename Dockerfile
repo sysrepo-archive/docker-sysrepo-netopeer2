@@ -155,7 +155,7 @@ RUN \
       cd /opt/dev && \
       git clone https://github.com/sysrepo/sysrepo.git && cd sysrepo && \
       mkdir build && cd build && \
-      cmake -DENABLE_TESTS=ON -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
+      cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
       make -j2 && \
       make install
 
