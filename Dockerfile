@@ -155,7 +155,7 @@ RUN \
       cd /opt/dev && \
       git clone https://github.com/sysrepo/sysrepo.git && cd sysrepo && \
       mkdir build && cd build && \
-      cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
+      cmake -DENABLE_TESTS=ON -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/opt/dev/sysrepo/build/repository  .. && \
       make -j2 && \
       make install
 
@@ -185,5 +185,4 @@ RUN \
       node-gyp build
 
 EXPOSE 6001
-CMD ["/usr/bin/sysrepod"]
-CMD ["/usr/bin/netopeer2-server", "-d"]
+CMD ["/opt/dev/sysrepo/build/tests/measure_perf"]
