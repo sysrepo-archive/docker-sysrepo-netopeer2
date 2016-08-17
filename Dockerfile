@@ -164,8 +164,8 @@ RUN \
       cd /opt/dev && git clone https://github.com/CESNET/Netopeer2.git && cd Netopeer2 && \
       git checkout master && \
       cd /opt/dev/Netopeer2/server && \
-      mkdir build && cd build \
-      && cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
+      mkdir build && cd build && \
+      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
       make install && \
       cd /opt/dev/Netopeer2/cli && \
