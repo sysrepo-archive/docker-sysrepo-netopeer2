@@ -134,7 +134,7 @@ RUN \
 RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/libyang.git && cd libyang && \
-      git checkout master && \
+      git checkout devel && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
@@ -154,6 +154,7 @@ RUN \
 RUN \
       cd /opt/dev && \
       git clone https://github.com/sysrepo/sysrepo.git && cd sysrepo && \
+      git checkout devel && \
       mkdir build && cd build && \
       cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
       make -j2 && \
@@ -162,13 +163,14 @@ RUN \
 # netopeer 2
 RUN \
       cd /opt/dev && git clone https://github.com/CESNET/Netopeer2.git && cd Netopeer2 && \
-      git checkout master && \
+      git checkout devel-server && \
       cd /opt/dev/Netopeer2/server && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
       make install && \
       cd /opt/dev/Netopeer2/cli && \
+      git checkout master && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
