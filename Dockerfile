@@ -124,7 +124,7 @@ RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
 # libredblack
 RUN \
-      cd /opt/dev && \
+      cd  /opt/dev && \
       git clone https://github.com/sysrepo/libredblack.git && cd libredblack && \
       ./configure && \
       make -j2 && \
@@ -144,7 +144,7 @@ RUN \
 RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/libnetconf2.git && cd libnetconf2 && \
-      git checkout master && \
+      git checkout devel && \
       mkdir build && cd build && \
       cmake  -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
@@ -170,7 +170,7 @@ RUN \
       make -j2 && \
       make install && \
       cd /opt/dev/Netopeer2/cli && \
-      git checkout master && \
+      git checkout devel-cli && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
