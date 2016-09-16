@@ -138,7 +138,7 @@ RUN \
       git clone https://github.com/CESNET/libyang.git && cd libyang && \
       git checkout devel && \
       mkdir build && cd build && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
+      cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
       make install
 
@@ -148,7 +148,7 @@ RUN \
       git clone https://github.com/CESNET/libnetconf2.git && cd libnetconf2 && \
       git checkout devel && \
       mkdir build && cd build && \
-      cmake  -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
+      cmake  -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
       make install
 
@@ -158,7 +158,7 @@ RUN \
       git clone https://github.com/sysrepo/sysrepo.git && cd sysrepo && \
       git checkout devel && \
       mkdir build && cd build && \
-      cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
+      cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
       make -j2 && \
       make install
 
@@ -168,13 +168,13 @@ RUN \
       git checkout devel-server && \
       cd /opt/dev/Netopeer2/server && \
       mkdir build && cd build && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
+      cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
       make install && \
       cd /opt/dev/Netopeer2/cli && \
       git checkout devel-cli && \
       mkdir build && cd build && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
+      cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
       make install
 
