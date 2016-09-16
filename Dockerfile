@@ -122,9 +122,11 @@ RUN \
 # fix nodejs name problem in ubunt
 RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
+RUN echo "version 20160916"
+
 # libredblack
 RUN \
-      cd  /opt/dev && \
+      cd /opt/dev && \
       git clone https://github.com/sysrepo/libredblack.git && cd libredblack && \
       ./configure && \
       make -j2 && \
