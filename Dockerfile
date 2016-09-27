@@ -107,22 +107,10 @@ RUN \
       make -j2 && \
       make install
 
-# install lua
-RUN \
-      apt-get update && apt-get install -y \
-      luajit \
-      luarocks
-
-# install node v4.x
-RUN \
-     curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
-     sudo apt-get install -y nodejs && \
-     npm install -g node-gyp
-
 # fix nodejs name problem in ubunt
 RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
-RUN echo "version 20160916"
+RUN echo "version 20160927"
 
 # libredblack
 RUN \
@@ -151,6 +139,30 @@ RUN \
       cmake  -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
       make install
+
+# install lua
+RUN \
+      apt-get update && apt-get install -y \
+      luajit \
+      luarocks
+
+# install lua 5.2
+RUN \
+      apt-get update && apt-get install -y \
+      lua5.2 \
+      lua5.2-dev
+
+# install node v4.x
+RUN \
+     curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
+     sudo apt-get install -y nodejs && \
+     npm install -g node-gyp
+
+# install java
+RUN \
+      apt-get update && apt-get install -y \
+      default-jre \
+      default-jdk
 
 # sysrepo
 RUN \
