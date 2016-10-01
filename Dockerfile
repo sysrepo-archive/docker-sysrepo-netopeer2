@@ -50,11 +50,11 @@ RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
 # set root password to root
 RUN echo "root:root" | chpasswd
 
-# upgrade cmake to 3.5
+# upgrade cmake to 3.6
 RUN \
       cd /opt/dev && \
-      wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz && \
-      tar -xvf cmake-3.5.2.tar.gz && rm cmake-3.5.2.tar.gz && cd cmake-3.5.2 && \
+      wget https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz && \
+      tar -xvf cmake-3.6.2.tar.gz && rm cmake-3.6.2.tar.gz && cd cmake-3.6.2 && \
       ./bootstrap && \
       make -j2 && \
       make install
