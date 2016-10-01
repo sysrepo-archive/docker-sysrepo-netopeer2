@@ -164,6 +164,12 @@ RUN \
       default-jre \
       default-jdk
 
+# install python3
+RUN \
+      apt-get update && apt-get install -y \
+      python3.4 \
+      python3.4-dev
+
 # sysrepo
 RUN \
       cd /opt/dev && \
