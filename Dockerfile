@@ -174,16 +174,6 @@ RUN \
       make -j2 && \
       make install
 
-# install libyang javascript bindings
-RUN \
-      cd /opt/dev/libyang && \
-      mkdir build_javascript_bindings && cd build_javascript_bindings && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF -DJAVASCRIPT_BINDING=ON .. && \
-      make -j2 && \
-      cd javascript && \
-      node-gyp configure && \
-      node-gyp build
-
 EXPOSE 6001
 CMD ["/usr/bin/sysrepod"]
 CMD ["/usr/bin/netopeer2-server", "-d"]
