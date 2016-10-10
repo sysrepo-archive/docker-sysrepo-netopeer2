@@ -50,7 +50,25 @@ RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
 # set root password to root
 RUN echo "root:root" | chpasswd
 
-# upgrade cmake to 3.6
+# protobuf
+RUN \
+      cd /opt/dev && \
+      git clone https://github.com/google/protobuf.git && cd protobuf && \
+      ./autogen.sh && \
+      ./configure --prefix=/usr && \
+      make -j2 && \
+      make install
+
+# protobuf-c
+RUN \
+      cd /opt/dev && \
+      git clone https://github.com/protobuf-c/protobuf-c.git && cd protobuf-c && \
+      ./autogen.sh && \
+      ./configure --prefix=/usr && \
+      make -j2 && \
+      make install
+
+#cmake
 RUN \
       cd /opt/dev && \
       wget https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz && \
@@ -58,17 +76,6 @@ RUN \
       ./bootstrap && \
       make -j2 && \
       make install
-
-# swig
-RUN \
-      cd /opt/dev && \
-      wget http://downloads.sourceforge.net/swig/swig-3.0.8.tar.gz && \
-      tar -xvf swig-3.0.8.tar.gz && rm swig-3.0.8.tar.gz && cd swig-3.0.8 && \
-      ./configure --prefix=/usr --without-clisp --without-maximum-compile-warnings && \
-      make && \
-      make install && \
-      install -v -m755 -d /usr/share/doc/swig-3.0.8 && \
-      cp -v -R Doc/* /usr/share/doc/swig-3.0.8
 
 #cmocka
 RUN \
@@ -89,28 +96,21 @@ RUN \
       make -j2 && \
       make install
 
-# protobuf
+# swig
 RUN \
       cd /opt/dev && \
-      git clone https://github.com/google/protobuf.git && cd protobuf && \
-      ./autogen.sh && \
-      ./configure --prefix=/usr && \
-      make -j2 && \
-      make install
-
-# protobuf-c
-RUN \
-      cd /opt/dev && \
-      git clone https://github.com/protobuf-c/protobuf-c.git && cd protobuf-c && \
-      ./autogen.sh && \
-      ./configure --prefix=/usr && \
-      make -j2 && \
-      make install
+      wget http://downloads.sourceforge.net/swig/swig-3.0.8.tar.gz && \
+      tar -xvf swig-3.0.8.tar.gz && rm swig-3.0.8.tar.gz && cd swig-3.0.8 && \
+      ./configure --prefix=/usr --without-clisp --without-maximum-compile-warnings && \
+      make && \
+      make install && \
+      install -v -m755 -d /usr/share/doc/swig-3.0.8 && \
+      cp -v -R Doc/* /usr/share/doc/swig-3.0.8
 
 # fix nodejs name problem in ubunt
 RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
-RUN echo "version 20161010_1"
+RUN echo "version 20161012"
 
 # libredblack
 RUN \
