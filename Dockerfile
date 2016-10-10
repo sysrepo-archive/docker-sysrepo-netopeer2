@@ -110,7 +110,7 @@ RUN \
 # fix nodejs name problem in ubunt
 RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
-RUN echo "version 20160927"
+RUN echo "version 20161010_1"
 
 # libredblack
 RUN \
