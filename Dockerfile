@@ -203,7 +203,9 @@ RUN \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
-      make install
+      make install && \
+      cp /opt/dev/Netopeer2/modules/ietf-netconf\@2011-06-01.yang /etc/sysrepo/yang && \
+      sysrepoctl --init --module=ietf-netconf
 
 # install libyang javascript bindings
 #RUN \
