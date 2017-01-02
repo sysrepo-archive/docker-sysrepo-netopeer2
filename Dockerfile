@@ -110,7 +110,7 @@ RUN \
 # fix nodejs name problem in ubunt
 RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
-RUN echo "version 20161012"
+RUN echo "version 20170102"
 
 # libredblack
 RUN \
@@ -142,13 +142,13 @@ RUN \
 
 # install lua
 RUN \
-      apt-get update && apt-get install -y \
+      apt-get install -y \
       luajit \
       luarocks
 
 # install lua 5.2
 RUN \
-      apt-get update && apt-get install -y \
+      apt-get install -y \
       lua5.2 \
       lua5.2-dev
 
@@ -160,13 +160,13 @@ RUN \
 
 # install java
 RUN \
-      apt-get update && apt-get install -y \
+      apt-get install -y \
       default-jre \
       default-jdk
 
 # install python3
 RUN \
-      apt-get update && apt-get install -y \
+      apt-get install -y \
       python3.4 \
       python3.4-dev
 
@@ -207,16 +207,21 @@ RUN \
       cp /opt/dev/Netopeer2/modules/ietf-netconf\@2011-06-01.yang /etc/sysrepo/yang && \
       sysrepoctl --init --module=ietf-netconf
 
-# install libyang javascript bindings
-#RUN \
-#      cd /opt/dev/libyang && \
-#      mkdir build_javascript_bindings && cd build_javascript_bindings && \
-#      cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF -DJAVASCRIPT_BINDING=ON .. && \
-#      make -j2 && \
-#      cd javascript && \
-#      node-gyp configure && \
-#      node-gyp build
+# install lua5.2 sysreupo bindings
+RUN \
+      cd /opt/dev/sysrepo/build && \
+      rm -rf *; cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LUA_VERSION=5.2 .. && \
+      make -j2 && \
+      make install
 
-EXPOSE 6001
+# install python 3 sysreupo bindings
+RUN \
+      cd /opt/dev/sysrepo/build && \
+      rm -rf *; cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_PYTHON_VERSION=3 .. && \
+      make -j2 && \
+      make install
+
+
+EXPOSE 830
 CMD ["/usr/bin/sysrepod"]
 CMD ["/usr/bin/netopeer2-server", "-d"]
