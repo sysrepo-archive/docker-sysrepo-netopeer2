@@ -110,7 +110,7 @@ RUN \
 # fix nodejs name problem in ubunt
 RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
-RUN echo "version 20170102"
+RUN echo "version 20170209";
 
 # libredblack
 RUN \
@@ -124,7 +124,7 @@ RUN \
 RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/libyang.git && cd libyang && \
-      git checkout devel && \
+      git checkout master && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
@@ -134,7 +134,7 @@ RUN \
 RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/libnetconf2.git && cd libnetconf2 && \
-      git checkout devel && \
+      git checkout master && \
       mkdir build && cd build && \
       cmake  -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
@@ -182,8 +182,8 @@ RUN \
 # sysrepo
 RUN \
       cd /opt/dev && \
-      git clone https://github.com/sysrepo/sysrepo.git && cd sysrepo && \
-      git checkout devel && \
+      git clone https://github.com/sartura/sysrepo.git && cd sysrepo && \
+      git checkout custom_master && \
       mkdir build && cd build && \
       cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
       make -j2 && \
@@ -192,14 +192,14 @@ RUN \
 # netopeer 2
 RUN \
       cd /opt/dev && git clone https://github.com/CESNET/Netopeer2.git && cd Netopeer2 && \
-      git checkout devel-server && \
+      git checkout master && \
       cd /opt/dev/Netopeer2/server && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
       make install && \
       cd /opt/dev/Netopeer2/cli && \
-      git checkout devel-cli && \
+      git checkout master && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Debug" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
       make -j2 && \
