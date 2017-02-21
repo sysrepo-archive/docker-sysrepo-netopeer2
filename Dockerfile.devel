@@ -1,0 +1,62 @@
+FROM ubuntu:14.04
+
+MAINTAINER Mislav Novakovic
+
+RUN apt-get update && apt-get install -y \
+	# general tools
+	git \
+    build-essential \
+	vim \
+    # protobuf
+    autoconf \
+    curl \
+    unzip \
+	# libyang
+	libpcre3-dev \
+	# sysrepo
+	libavl-dev \
+	libev-dev \
+    # sysrepo bindings
+    swig \
+    lua5.2 \
+    lua5.2-dev \
+    lua5.1 \
+    lua5.1-dev \
+    # netopeer2
+    libssl-dev \
+    libtool \
+    automake \
+    pkg-config
+
+# install swig 3.x
+RUN \
+      echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" >> \
+      /etc/apt/sources.list && \
+      apt-get update && apt-get install -y swig3.0
+
+# install cmake 3.x
+RUN \
+      apt-get install -y software-properties-common && \
+      add-apt-repository -y ppa:george-edison55/cmake-3.x && \
+      apt-get update && \
+      apt-get install -y cmake
+
+# add netconf user
+RUN \
+	adduser --system netconf && \
+	echo "netconf:netconf" | chpasswd
+
+# generate ssh keys for netconf user
+RUN \
+	mkdir -p /home/netconf/.ssh && \
+	ssh-keygen -A && \
+	ssh-keygen -t dsa -P '' -f /home/netconf/.ssh/id_dsa && \
+	cat /home/netconf/.ssh/id_dsa.pub > /home/netconf/.ssh/authorized_keys
+
+ADD install_devel.sh /tmp
+
+RUN \
+      bash /tmp/install_devel.sh
+
+ENV EDITOR vim
+EXPOSE 830
