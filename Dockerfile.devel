@@ -53,6 +53,10 @@ RUN \
 	ssh-keygen -t dsa -P '' -f /home/netconf/.ssh/id_dsa && \
 	cat /home/netconf/.ssh/id_dsa.pub > /home/netconf/.ssh/authorized_keys
 
+# create /opt/dev directory
+RUN \
+      mkdir /opt/dev -p
+
 ADD install_devel.sh /tmp
 
 RUN \

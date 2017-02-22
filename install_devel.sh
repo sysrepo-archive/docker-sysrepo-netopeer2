@@ -72,16 +72,31 @@
       make install && \
       ldconfig
 
-# netopeer2
+# keystore
 #RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/Netopeer2.git && \
+	  cd Netopeer2 && git checkout devel-server && \
+      cd keystored && mkdir build && cd build && \
+      cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
+      make -j2 && \
+      make install
+
+# netopeer2 server
+#RUN \
+      cd /opt/dev && \
       cd Netopeer2/server && mkdir build && cd build && \
 	  git checkout devel-server && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
       make -j2 && \
       make install && \
-      cd ../../cli && mkdir build && cd build && \
+      ldconfig
+
+# not necessary
+# netopeer2 server
+#RUN \
+      cd /opt/dev && \
+      cd Netopeer2/cli && mkdir build && cd build && \
 	  git checkout devel-cli && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
       make -j2 && \
