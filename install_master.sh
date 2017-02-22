@@ -1,13 +1,5 @@
 # use /opt/dev as working directory
 
-# clean the /opt/dev directory of all content
-if [ ! -d "/opt/dev/" ]; then
-	mkdir /opt/dev
-else
-	rm -rf /opt/dev
-	mkdir /opt/dev
-fi
-
 # libssh
 #RUN \
       cd /opt/dev && \
