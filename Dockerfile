@@ -17,7 +17,6 @@ RUN \
       libprotobuf-c-dev \
       protobuf-c-compiler \
       # netopeer2 \
-      libssh-dev \
       libssl-dev \
       # bindings
       swig \
@@ -72,6 +71,17 @@ RUN \
       make -j2 && \
       make install && \
       ldconfig
+
+# libssh-dev
+RUN \
+      apt-get install -y wget && \
+      wget https://red.libssh.org/attachments/download/195/libssh-0.7.3.tar.xz && \
+      tar xvfJ  libssh-0.7.3.tar.xz && \
+      cd libssh-0.7.3 && \
+      mkdir build && cd build && \
+      cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Debug .. && \
+      make -j2 && \
+      make install
 
 # libnetconf2
 RUN \
