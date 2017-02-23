@@ -49,6 +49,7 @@ RUN \
       git clone https://github.com/CESNET/libyang.git && \
       cd libyang && mkdir build && cd build && \
 	  git checkout devel && \
+      git checkout e3d871efaecb237aa6ed34726a7161a6e7c83f1e && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
       make install && \
