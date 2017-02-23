@@ -1,189 +1,122 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
+
+MAINTAINER mislav.novakovic@sartura.hr
 
 RUN \
       apt-get update && apt-get install -y \
+      # general tools
       git \
-      curl \
-      wget \
-      libssl-dev \
-      libtool \
+      cmake \
       build-essential \
-      autoconf \
-      automake \
-      pkg-config \
-      libgtk-3-dev \
-      make \
       vim \
-      valgrind \
-      doxygen \
-      libev-dev \
-      libavl-dev \
+      # libyang
       libpcre3-dev \
-      unzip \
-      sudo \
-      python-setuptools \
-      python-dev \
-      build-essential \
-      bison \
-      flex
+      # sysrepo
+      libavl-dev \
+      libev-dev \
+      libprotobuf-c-dev \
+      protobuf-c-compiler \
+      # netopeer2 \
+      libssh-dev \
+      libssl-dev \
+      # bindings
+      swig \
+      lua5.1 \
+      lua5.1-dev
 
-# pyang
-RUN easy_install pip
-RUN pip install --upgrade pyang
-
-# Adding netconf user
-RUN adduser --system netconf
-RUN mkdir -p /home/netconf/.ssh
-RUN echo "netconf:netconf" | chpasswd && adduser netconf sudo
-
-# Clearing and setting authorized ssh keys
-RUN echo '' > /home/netconf/.ssh/authorized_keys
-RUN ssh-keygen -A
-RUN ssh-keygen -t dsa -P '' -f /home/netconf/.ssh/id_dsa
-RUN cat /home/netconf/.ssh/id_dsa.pub >> /home/netconf/.ssh/authorized_keys
-
-# Updating shell to bash
-RUN sed -i s#/home/netconf:/bin/false#/home/netconf:/bin/bash# /etc/passwd
-
-RUN mkdir /opt/dev && sudo chown -R netconf /opt/dev
-
-# set root password to root
-RUN echo "root:root" | chpasswd
-
-# upgrade cmake to 3.5
+# add netconf user
 RUN \
-      cd /opt/dev && \
-      wget https://cmake.org/files/v3.5/cmake-3.5.2.tar.gz && \
-      tar -xvf cmake-3.5.2.tar.gz && rm cmake-3.5.2.tar.gz && cd cmake-3.5.2 && \
-      ./bootstrap && \
-      make -j2 && \
-      make install
+	adduser --system netconf && \
+	echo "netconf:netconf" | chpasswd
 
-# swig
+# add password to root user
 RUN \
-      cd /opt/dev && \
-      wget http://downloads.sourceforge.net/swig/swig-3.0.8.tar.gz && \
-      tar -xvf swig-3.0.8.tar.gz && rm swig-3.0.8.tar.gz && cd swig-3.0.8 && \
-      ./configure --prefix=/usr --without-clisp --without-maximum-compile-warnings && \
-      make && \
-      make install && \
-      install -v -m755 -d /usr/share/doc/swig-3.0.8 && \
-      cp -v -R Doc/* /usr/share/doc/swig-3.0.8
+	echo "root:root" | chpasswd
 
-#cmocka
+# generate ssh keys for netconf user
 RUN \
-      cd /opt/dev && \
-      git clone git://git.cryptomilk.org/projects/cmocka.git && cd cmocka && \
-      git checkout tags/cmocka-1.0.1 && \
-      mkdir build && cd build && \
-      cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
-      make -j2 && \
-      make install
+	mkdir -p /home/netconf/.ssh && \
+	ssh-keygen -A && \
+	ssh-keygen -t dsa -P '' -f /home/netconf/.ssh/id_dsa && \
+	cat /home/netconf/.ssh/id_dsa.pub > /home/netconf/.ssh/authorized_keys
 
-# libssh
+# create /opt/dev directory
 RUN \
-      cd /opt/dev && \
-      git clone http://git.libssh.org/projects/libssh.git && cd libssh && \
-      mkdir build && cd build && \
-      cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
-      make -j2 && \
-      make install
-
-# protobuf
-RUN \
-      cd /opt/dev && \
-      git clone https://github.com/google/protobuf.git && cd protobuf && \
-      ./autogen.sh && \
-      ./configure --prefix=/usr && \
-      make -j2 && \
-      make install
-
-# protobuf-c
-RUN \
-      cd /opt/dev && \
-      git clone https://github.com/protobuf-c/protobuf-c.git && cd protobuf-c && \
-      ./autogen.sh && \
-      ./configure --prefix=/usr && \
-      make -j2 && \
-      make install
-
-# install lua
-RUN \
-      apt-get update && apt-get install -y \
-      luajit \
-      luarocks
-
-# install node v4.x
-RUN \
-     curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - && \
-     sudo apt-get install -y nodejs && \
-     npm install -g node-gyp
-
-# fix nodejs name problem in ubunt
-RUN sudo ln -sf /usr/bin/nodejs /usr/bin/node
-
-# libredblack
-RUN \
-      cd /opt/dev && \
-      git clone https://github.com/sysrepo/libredblack.git && cd libredblack && \
-      ./configure && \
-      make -j2 && \
-      make install
+      mkdir /opt/dev -p
 
 # libyang
 RUN \
       cd /opt/dev && \
-      git clone https://github.com/CESNET/libyang.git && cd libyang && \
-      git checkout master && \
-      mkdir build && cd build && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
+      git clone https://github.com/CESNET/libyang.git && \
+      cd libyang && mkdir build && cd build && \
+	  git checkout devel && \
+      cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
-      make install
-
-# libnetconf2
-RUN \
-      cd /opt/dev && \
-      git clone https://github.com/CESNET/libnetconf2.git && cd libnetconf2 && \
-      git checkout master && \
-      mkdir build && cd build && \
-      cmake  -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF .. && \
-      make -j2 && \
-      make install
+      make install && \
+      ldconfig
 
 # sysrepo
 RUN \
       cd /opt/dev && \
-      git clone https://github.com/sysrepo/sysrepo.git && cd sysrepo && \
-      mkdir build && cd build && \
-      cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DREPOSITORY_LOC:PATH=/etc/sysrepo .. && \
-      make -j2 && \
-      make install
-
-# netopeer 2
-RUN \
-      cd /opt/dev && git clone https://github.com/CESNET/Netopeer2.git && cd Netopeer2 && \
-      git checkout master && \
-      cd /opt/dev/Netopeer2/server && \
-      mkdir build && cd build && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
+      git clone https://github.com/sysrepo/sysrepo.git && \
+      cd sysrepo && \
+	  git checkout devel && \
+	  mkdir build && cd build && \
+      cmake \
+       -DCMAKE_BUILD_TYPE:String="Release" \
+      -DENABLE_TESTS=OFF \
+      -DREPOSITORY_LOC:PATH=/etc/sysrepo \
+      -DGEN_LUA_VERSION=5.1 \
+      -DGEN_PYTHON_BINDINGS=false \
+      .. && \
       make -j2 && \
       make install && \
-      cd /opt/dev/Netopeer2/cli && \
-      mkdir build && cd build && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && \
+      ldconfig
+
+# libnetconf2
+RUN \
+      cd /opt/dev && \
+      git clone https://github.com/CESNET/libnetconf2.git && \
+      cd libnetconf2 && mkdir build && cd build && \
+	  git checkout devel && \
+      cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
+      make -j2 && \
+      make install && \
+      ldconfig
+
+# keystore
+RUN \
+      cd /opt/dev && \
+      git clone https://github.com/CESNET/Netopeer2.git && \
+	  cd Netopeer2 && git checkout devel-server && \
+      cd keystored && mkdir build && cd build && \
+      cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
       make -j2 && \
       make install
 
-# install libyang javascript bindings
+# netopeer2 server
 RUN \
-      cd /opt/dev/libyang && \
-      mkdir build_javascript_bindings && cd build_javascript_bindings && \
-      cmake -DCMAKE_BUILD_TYPE:String="Release" -DCMAKE_INSTALL_PREFIX:PATH=/usr -DENABLE_BUILD_TESTS=OFF -DJAVASCRIPT_BINDING=ON .. && \
+      cd /opt/dev && \
+      cd Netopeer2/server && \
+	  git checkout devel-server && \
+      sed -i '/nc_server_endpt_set_address/ s/0.0.0.0/\:\:/' ./main.c && \
+      mkdir build && cd build && \
+      cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
       make -j2 && \
-      cd javascript && \
-      node-gyp configure && \
-      node-gyp build
+      make install && \
+      ldconfig
 
-EXPOSE 6001
-CMD ["/usr/bin/sysrepod"]
-CMD ["/usr/bin/netopeer2-server", "-d"]
+# not necessary
+# netopeer2 server
+RUN \
+      cd /opt/dev && \
+      cd Netopeer2/cli && mkdir build && cd build && \
+      git checkout ../../server/main.c && \
+	  git checkout devel-cli && \
+      cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
+      make -j2 && \
+      make install && \
+      ldconfig
+
+ENV EDITOR vim
+EXPOSE 830
