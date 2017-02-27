@@ -3,8 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER mislav.novakovic@sartura.hr
 
 RUN \
-      apt-get update && \
-      apt-get install -y \
+      apt-get update && apt-get install -y \
       # general tools
       git \
       cmake \
@@ -69,6 +68,7 @@ RUN \
       -DREPOSITORY_LOC:PATH=/etc/sysrepo \
       -DGEN_LUA_VERSION=5.1 \
       -DGEN_PYTHON_BINDINGS=false \
+      -DENABLE_NACM=OFF \
       .. && \
       make -j2 && \
       make install && \
