@@ -3,7 +3,8 @@ FROM ubuntu:16.04
 MAINTAINER mislav.novakovic@sartura.hr
 
 RUN \
-      apt-get update && apt-get install -y \
+      apt-get update && \
+      apt-get install -y \
       # general tools
       git \
       cmake \
@@ -110,6 +111,7 @@ RUN \
       cd /opt/dev && \
       cd Netopeer2/server && \
 	  git checkout devel-server && \
+      git checkout f005c89131949ee78f100d3eb86e6593797bd92c && \
       sed -i '/nc_server_endpt_set_address/ s/0.0.0.0/\:\:/' ./main.c && \
       mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
