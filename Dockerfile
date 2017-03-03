@@ -43,12 +43,14 @@ RUN \
 RUN \
       mkdir /opt/dev -p
 
+RUN echo "version 20170303"
+
 # libyang
 RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/libyang.git && \
       cd libyang && mkdir build && cd build && \
-	  git checkout devel && \
+      git checkout devel && \
       git checkout e3d871efaecb237aa6ed34726a7161a6e7c83f1e && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
@@ -60,10 +62,10 @@ RUN \
       cd /opt/dev && \
       git clone https://github.com/sysrepo/sysrepo.git && \
       cd sysrepo && \
-	  git checkout devel && \
-	  mkdir build && cd build && \
+      git checkout devel && \
+      mkdir build && cd build && \
       cmake \
-       -DCMAKE_BUILD_TYPE:String="Release" \
+      -DCMAKE_BUILD_TYPE:String="Release" \
       -DENABLE_TESTS=OFF \
       -DREPOSITORY_LOC:PATH=/etc/sysrepo \
       -DGEN_LUA_VERSION=5.1 \
@@ -90,7 +92,8 @@ RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/libnetconf2.git && \
       cd libnetconf2 && mkdir build && cd build && \
-	  git checkout devel && \
+      git checkout devel && \
+      git checkout 3e9d168ddd0dde086df94844819fe42dcddcb136 && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
       make install && \
@@ -100,7 +103,7 @@ RUN \
 RUN \
       cd /opt/dev && \
       git clone https://github.com/CESNET/Netopeer2.git && \
-	  cd Netopeer2 && git checkout devel-server && \
+      cd Netopeer2 && git checkout devel-server && \
       cd keystored && mkdir build && cd build && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
       make -j2 && \
@@ -110,7 +113,7 @@ RUN \
 RUN \
       cd /opt/dev && \
       cd Netopeer2/server && \
-	  git checkout devel-server && \
+      git checkout devel-server && \
       git checkout f005c89131949ee78f100d3eb86e6593797bd92c && \
       sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml  && \
       cat ./stock_config.xml && \
@@ -126,7 +129,7 @@ RUN \
       cd /opt/dev && \
       cd Netopeer2/cli && mkdir build && cd build && \
       git checkout ../../server/stock_config.xml && \
-	  git checkout devel-cli && \
+      git checkout devel-cli && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
       make -j2 && \
       make install && \
