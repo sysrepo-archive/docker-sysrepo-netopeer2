@@ -63,6 +63,7 @@ RUN \
       git clone https://github.com/sysrepo/sysrepo.git && \
       cd sysrepo && \
       git checkout devel && \
+      git checkout 2d451a2c84dc543a975e6fde6d22baebdb7bc697 && \
       mkdir build && cd build && \
       cmake \
       -DCMAKE_BUILD_TYPE:String="Release" \
