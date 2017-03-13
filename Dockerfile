@@ -43,7 +43,7 @@ RUN \
 RUN \
       mkdir /opt/dev -p
 
-RUN echo "version 20170303"
+RUN echo "version 20170404"
 
 # libyang
 RUN \
@@ -51,7 +51,6 @@ RUN \
       git clone https://github.com/CESNET/libyang.git && \
       cd libyang && mkdir build && cd build && \
       git checkout devel && \
-      git checkout e3d871efaecb237aa6ed34726a7161a6e7c83f1e && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
       make install && \
@@ -63,7 +62,6 @@ RUN \
       git clone https://github.com/sysrepo/sysrepo.git && \
       cd sysrepo && \
       git checkout devel && \
-      git checkout 2d451a2c84dc543a975e6fde6d22baebdb7bc697 && \
       mkdir build && cd build && \
       cmake \
       -DCMAKE_BUILD_TYPE:String="Release" \
@@ -94,7 +92,6 @@ RUN \
       git clone https://github.com/CESNET/libnetconf2.git && \
       cd libnetconf2 && mkdir build && cd build && \
       git checkout devel && \
-      git checkout 3e9d168ddd0dde086df94844819fe42dcddcb136 && \
       cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
       make -j2 && \
       make install && \
@@ -115,7 +112,6 @@ RUN \
       cd /opt/dev && \
       cd Netopeer2/server && \
       git checkout devel-server && \
-      git checkout f005c89131949ee78f100d3eb86e6593797bd92c && \
       sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml  && \
       cat ./stock_config.xml && \
       mkdir build && cd build && \
