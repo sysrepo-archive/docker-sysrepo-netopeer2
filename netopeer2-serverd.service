@@ -1,0 +1,16 @@
+[Unit]
+Description=Network configuration tools based on the NETCONF Protocol
+After=sysrepod.service
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/netopeer2-server
+PIDFile=/var/run/sysrepod.pid
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=yes
+ProtectHome=yes
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target
