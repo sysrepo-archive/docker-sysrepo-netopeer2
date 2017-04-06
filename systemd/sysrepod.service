@@ -1,0 +1,11 @@
+[Unit]
+Description=Sysrepod
+After=network.target
+ConditionPathExists=/usr/local/bin/sysrepod
+
+[Service]
+ExecStart=/usr/local/bin/sysrepod -d -l4
+ExecReload=/bin/kill -USR1 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

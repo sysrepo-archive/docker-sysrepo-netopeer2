@@ -1,0 +1,11 @@
+[Unit]
+Description=Netopeer2
+After=sysrepod.target
+ConditionPathExists=/usr/local/bin/netopeer2-server
+
+[Service]
+ExecStart=/usr/local/bin/netopeer2-server -d
+ExecReload=/bin/kill -USR1 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

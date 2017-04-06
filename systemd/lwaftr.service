@@ -1,0 +1,11 @@
+[Unit]
+Description=lwAFTR
+After=netopeer2-server.target
+ConditionPathExists=/opt/snabb/conf/lwaftr.sh
+
+[Service]
+ExecStart=/opt/snabb/conf/lwaftr.sh
+ExecReload=/bin/kill -USR1 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

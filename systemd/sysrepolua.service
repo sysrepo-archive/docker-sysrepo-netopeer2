@@ -1,0 +1,12 @@
+[Unit]
+Description=SysrepoLua
+Requires=lwaftr.service
+ConditionPathExists=/opt/snabb/sysrepo/snabb.lua
+
+[Service]
+ExecStart=/opt/snabb/conf/lwaftrsysrepolua.sh
+ExecReload=/bin/kill -USR1 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+
