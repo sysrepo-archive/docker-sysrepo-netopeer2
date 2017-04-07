@@ -35,7 +35,7 @@ cd /opt/dev/libyang
 mkdir build && cd build
 git fetch origin
 git rebase origin/devel
-git checkout bcd7d3f45ea06b57cf6fd3e426f6611e788b5a11
+git checkout b77d6edb9ce6f5678d5e5fba3c9803b711e4d3e5
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
@@ -84,7 +84,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2
 git fetch origin
 git rebase origin/devel-server
-git checkout c194ee99b0d97d0c32b604e930ba98c2d7277f5c
+git checkout 46448e6c0dc2613f9b83e57a8f9242c862bf1e45
 cd keystored
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
@@ -95,7 +95,7 @@ make install
 cd /opt/dev/Netopeer2/server
 git fetch origin
 git rebase origin/devel-server
-git checkout c194ee99b0d97d0c32b604e930ba98c2d7277f5c
+git checkout 46448e6c0dc2613f9b83e57a8f9242c862bf1e45
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
@@ -133,12 +133,12 @@ sysrepoctl --init --search-dir=/etc/sysrepo/yang/ -m snabb-softwire-v1
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
 
 touch /var/log/exabgp.log
-chown root:root /var/log/exabgp.log
+chown dtadmin:dtadmin /var/log/exabgp.log
 touch /var/log/exabgphealthcheck.log
-chown root:root /var/log/exabgphealthcheck.log
+chown dtadmin:dtadmin /var/log/exabgphealthcheck.log
 
 systemctl enable sysrepod.service
 systemctl enable netopeer2-server.service
 systemctl enable lwaftr.service
 systemctl enable sysrepolua.service
-#systemctl enable exabgp.service
+systemctl enable exabgp.service

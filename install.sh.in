@@ -133,12 +133,12 @@ sysrepoctl --init --search-dir=/etc/sysrepo/yang/ -m snabb-softwire-v1
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
 
 touch /var/log/exabgp.log
-chown root:root /var/log/exabgp.log
+chown dtadmin:dtadmin /var/log/exabgp.log
 touch /var/log/exabgphealthcheck.log
-chown root:root /var/log/exabgphealthcheck.log
+chown dtadmin:dtadmin /var/log/exabgphealthcheck.log
 
 systemctl enable sysrepod.service
 systemctl enable netopeer2-server.service
 systemctl enable lwaftr.service
 systemctl enable sysrepolua.service
-#systemctl enable exabgp.service
+systemctl enable exabgp.service
