@@ -35,7 +35,7 @@ cd /opt/dev/libyang
 mkdir build && cd build
 git fetch origin
 git rebase origin/devel
-git checkout b77d6edb9ce6f5678d5e5fba3c9803b711e4d3e5
+git checkout b01625f9d373006e3f7877ff352ac87c04ec8612
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
@@ -47,7 +47,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo
 git fetch origin
 git rebase origin/devel
-git checkout 578698faa3a86569f4d84163eb34506439eaa836
+git checkout 21177794c19365f68487952f5c84ff961912e740
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LUA_VERSION=5.1 -DGEN_PYTHON_BINDINGS=false -DENABLE_NACM=OFF ..
 make -j2
@@ -73,7 +73,7 @@ cd /opt/dev/libnetconf2
 mkdir build && cd build
 git fetch origin
 git rebase origin/devel
-git checkout 144ec4e6027eb93ff682cb8a1772f9fe2996b5c1
+git checkout 0af521379821e0387beaef144dd0a491acc1c400
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
@@ -84,7 +84,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2
 git fetch origin
 git rebase origin/devel-server
-git checkout 46448e6c0dc2613f9b83e57a8f9242c862bf1e45
+git checkout 87325fe97996ddc2019724d9f22fc50947eb63be
 cd keystored
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
@@ -95,7 +95,7 @@ make install
 cd /opt/dev/Netopeer2/server
 git fetch origin
 git rebase origin/devel-server
-git checkout 46448e6c0dc2613f9b83e57a8f9242c862bf1e45
+git checkout 87325fe97996ddc2019724d9f22fc50947eb63be
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
