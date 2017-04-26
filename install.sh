@@ -47,7 +47,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo
 git fetch origin
 git rebase origin/devel
-git checkout 21177794c19365f68487952f5c84ff961912e740
+git checkout fada08288e64589ab73cc82a545967d38af61136
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LUA_VERSION=5.1 -DGEN_PYTHON_BINDINGS=false -DENABLE_NACM=OFF ..
 make -j2
