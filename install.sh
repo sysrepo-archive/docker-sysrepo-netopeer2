@@ -11,7 +11,7 @@ pip install scapy
 # Adding netconf user ####################################################
 adduser --group --system netconf
 mkdir -p /home/netconf/.ssh
-echo "netconf:netconf" | chpasswd && adduser netconf sudo
+echo "netconf:netconf" | chpasswd && adduser netconf
 # Clearing and setting authorized ssh keys ##############################
 echo '' > /home/netconf/.ssh/authorized_keys
 ssh-keygen -A
@@ -20,7 +20,7 @@ cat /home/netconf/.ssh/id_dsa.pub >> /home/netconf/.ssh/authorized_keys
 
 # Updating shell to bash ##################################################
 sed -i s#/home/netconf:/bin/false#/home/netconf:/bin/bash# /etc/passwd
-mkdir /opt/dev && sudo chown -R netconf /opt/dev
+mkdir /opt/dev && chown -R netconf /opt/dev
 # set root password to root#################################################
 echo "root:root" | chpasswd
 
@@ -73,7 +73,7 @@ cd /opt/dev/libnetconf2
 mkdir build && cd build
 git fetch origin
 git rebase origin/master
-git checkout e8b3b3333b3635dd394a6c01842aba27efdd036a
+git checkout 0a70b154fd05a7654d340dd4aba5305462d9e1d0
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
@@ -119,8 +119,7 @@ cp -r /var/lib/vmfactory/files/snabb/* /opt/snabb
 ###########################################
 
 ## copying/installing yang model from snabb to sysrepo
-cp /opt/snabb/src/lib/yang/snabb-softwire-v1.yang /etc/sysrepo/yang/
-sysrepoctl --init --search-dir=/etc/sysrepo/yang/ -m snabb-softwire-v1
+sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v1.yang
 
 
 
