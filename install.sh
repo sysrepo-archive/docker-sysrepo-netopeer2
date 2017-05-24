@@ -35,7 +35,7 @@ cd /opt/dev/libyang
 mkdir build && cd build
 git fetch origin
 git rebase origin/master
-git checkout 5bebf60e168899dcfea34e538c522263007f7c1c
+git checkout 696ac834b81c1148b9d4c8c943ca732318ccc975
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
@@ -73,7 +73,7 @@ cd /opt/dev/libnetconf2
 mkdir build && cd build
 git fetch origin
 git rebase origin/master
-git checkout 9cdc39d0ced3f707b8b054e116c4d6fac276fc1d
+git checkout e8b3b3333b3635dd394a6c01842aba27efdd036a
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
