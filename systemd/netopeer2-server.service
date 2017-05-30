@@ -4,7 +4,7 @@ After=sysrepod.target
 ConditionPathExists=/usr/local/bin/netopeer2-server
 
 [Service]
-ExecStart=/usr/local/bin/netopeer2-server -d
+ExecStart=/usr/local/bin/netopeer2-server -d -v 2
 ExecReload=/bin/kill -USR1 $MAINPID
 
 [Install]
