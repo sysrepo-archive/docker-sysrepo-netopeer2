@@ -84,7 +84,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2
 git fetch origin
 git rebase origin/master
-git checkout 
+git checkout ccf51b6759e910b646c125ae92e2cd4eb3d9fed6
 cd keystored
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
@@ -95,7 +95,7 @@ make install
 cd /opt/dev/Netopeer2/server
 git fetch origin
 git rebase origin/master
-git checkout 
+git checkout ccf51b6759e910b646c125ae92e2cd4eb3d9fed6
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
