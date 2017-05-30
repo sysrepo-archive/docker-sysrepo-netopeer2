@@ -35,7 +35,7 @@ cd /opt/dev/libyang
 mkdir build && cd build
 git fetch origin
 git rebase origin/master
-git checkout 696ac834b81c1148b9d4c8c943ca732318ccc975
+git checkout dd2100b39ddd23b91c79bc4f922638e0188bd1e7
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
@@ -47,7 +47,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo
 git fetch origin
 git rebase origin/master
-git checkout e4a5705a4c5293ba121048c71899b98243d99edf
+git checkout e01149730b043f8c8bf60f4a148ad79de0600a7d
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LUA_VERSION=5.1 -DGEN_PYTHON_BINDINGS=false -DENABLE_NACM=OFF ..
 make -j2
@@ -73,7 +73,7 @@ cd /opt/dev/libnetconf2
 mkdir build && cd build
 git fetch origin
 git rebase origin/master
-git checkout 0a70b154fd05a7654d340dd4aba5305462d9e1d0
+git checkout cc1b741c2133356ccf118d74a0d33aa0839f248e
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
