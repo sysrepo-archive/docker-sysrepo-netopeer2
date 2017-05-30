@@ -103,9 +103,20 @@ make -j2
 make install
 ldconfig
 
+# netopeer2 cli
+cd /opt/dev/Netopeer2/cli
+git fetch origin
+git rebase origin/master
+git checkout netopeer2_master_commit
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE:String="Release" ..
+make -j2
+make install
+ldconfig
+
 ####################################### compile Igalia AFTR
 cd /var/lib/vmfactory/files/snabb
-git checkout v3.1.8
+git checkout v3.1.9
 make -j
 
 cd /var/lib/vmfactory/files/snabb
