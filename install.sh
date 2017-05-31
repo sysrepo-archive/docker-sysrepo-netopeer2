@@ -9,7 +9,7 @@ pip install scapy
 
 
 # Adding netconf user ####################################################
-adduser --group --system netconf
+useradd -m netconf
 mkdir -p /home/netconf/.ssh
 echo "netconf:netconf" | chpasswd && adduser netconf
 # Clearing and setting authorized ssh keys ##############################
