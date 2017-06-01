@@ -1,11 +1,13 @@
 [Unit]
 Description=Sysrepo YANG configuration storage and management
-After=syslog.target network.target
+After=syslog.target network.target sysrepod.service
+Requires=sysrepod.service
+PartOf=sysrepod.service
 
 [Service]
 Type=forking
-ExecStart=/usr/local/bin/sysrepod -l 2
-PIDFile=/var/run/sysrepod.pid
+ExecStart=/usr/local/bin/sysrepo-plugind -l 2
+PIDFile=/var/run/sysrepo-plugind.pid
 PrivateTmp=yes
 PrivateDevices=yes
 ProtectSystem=yes

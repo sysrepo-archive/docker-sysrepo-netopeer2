@@ -1,11 +1,19 @@
 [Unit]
-Description=Netopeer2
-After=sysrepod.target
-ConditionPathExists=/usr/local/bin/netopeer2-server
+Description=A NETCONF server on top of sysrepo
+After=syslog.target network.target sysrepod.service
+Requires=sysrepod.service
+PartOf=sysrepod.service
 
 [Service]
-ExecStart=/usr/local/bin/netopeer2-server -d -v 2
-ExecReload=/bin/kill -USR1 $MAINPID
+Type=forking
+ExecStart=/usr/local/bin/netopeer2-server -v 1
+PIDFile=/var/run/netopeer2-server.pid
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=yes
+ProtectHome=yes
+SystemCallArchitectures=native
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=ExaBGP
+After=network.target
+ConditionPathExists=/etc/exabgp/exabgp.conf
+
+[Service]
+Environment=exabgp_daemon_daemonize=true
+ExecStart=/etc/exabgp/exabgp.sh
+ExecReload=/bin/kill -USR1 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

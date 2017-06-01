@@ -148,6 +148,7 @@ touch /var/log/exabgphealthcheck.log
 chown dtadmin:dtadmin /var/log/exabgphealthcheck.log
 
 systemctl enable sysrepod.service
+systemctl enable sysrepo-plugind.service
 systemctl enable netopeer2-server.service
 systemctl enable lwaftr.service
 systemctl enable sysrepolua.service
