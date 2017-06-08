@@ -48,6 +48,10 @@ cd /opt/dev/sysrepo
 git fetch origin
 git rebase origin/master
 git checkout sysrepo_master_commit
+# add commit to remove autostart
+git remote add sartura https://github.com/sartura/sysrepo.git
+git fetch sartura
+git cherry-pick 0b1267e4a492ca71ed73301a87356480adb6e3f0
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LUA_VERSION=5.1 -DGEN_PYTHON_BINDINGS=false -DENABLE_NACM=OFF ..
 make -j2
@@ -117,7 +121,7 @@ ldconfig
 ####################################### compile Igalia AFTR
 cd /var/lib/vmfactory/files/snabb
 git checkout v3.1.9
-make -j
+make -j2
 
 cd /var/lib/vmfactory/files/snabb
 git remote add sartura https://github.com/sartura/snabb.git
