@@ -122,6 +122,7 @@ ldconfig
 cd /var/lib/vmfactory/files/snabb
 git checkout v3.1.9
 make -j2
+make install
 
 cd /var/lib/vmfactory/files/snabb
 git remote add sartura https://github.com/sartura/snabb.git

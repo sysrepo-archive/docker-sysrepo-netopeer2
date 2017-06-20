@@ -35,7 +35,7 @@ cd /opt/dev/libyang
 mkdir build && cd build
 git fetch origin
 git rebase origin/master
-git checkout db75b4e579a1ecd622e9ce80ea2baf0020d7114b
+git checkout 4e62f5d8dd1b940ca4a28f6556ecbdd41cb0a991
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF ..
 make -j2
 make install
@@ -88,7 +88,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2
 git fetch origin
 git rebase origin/master
-git checkout ccf51b6759e910b646c125ae92e2cd4eb3d9fed6
+git checkout bdb8cd747e6573a102b416f9e0cda76455c25ee5
 cd keystored
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
@@ -99,7 +99,7 @@ make install
 cd /opt/dev/Netopeer2/server
 git fetch origin
 git rebase origin/master
-git checkout ccf51b6759e910b646c125ae92e2cd4eb3d9fed6
+git checkout bdb8cd747e6573a102b416f9e0cda76455c25ee5
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
@@ -111,7 +111,7 @@ ldconfig
 cd /opt/dev/Netopeer2/cli
 git fetch origin
 git rebase origin/master
-git checkout ccf51b6759e910b646c125ae92e2cd4eb3d9fed6
+git checkout bdb8cd747e6573a102b416f9e0cda76455c25ee5
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE:String="Release" ..
 make -j2
@@ -122,6 +122,7 @@ ldconfig
 cd /var/lib/vmfactory/files/snabb
 git checkout v3.1.9
 make -j2
+make install
 
 cd /var/lib/vmfactory/files/snabb
 git remote add sartura https://github.com/sartura/snabb.git
