@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 
 MAINTAINER mislav.novakovic@sartura.hr
 
+RUN echo "test"
+
 RUN \
       apt-get update && apt-get install -y \
       # general tools
@@ -11,17 +13,16 @@ RUN \
       vim \
       # libyang
       libpcre3-dev \
+	  pkg-config \
+	  bison \
+	  flex \
       # sysrepo
       libavl-dev \
       libev-dev \
       libprotobuf-c-dev \
       protobuf-c-compiler \
       # netopeer2 \
-      libssl-dev \
-      # bindings
-      swig \
-      lua5.1 \
-      lua5.1-dev
+      libssl-dev
 
 RUN \
       apt-get update && apt-get install -y \
@@ -41,7 +42,8 @@ RUN \
       git clone https://github.com/sysrepo/sysrepo.git && \
       git clone https://github.com/CESNET/libnetconf2.git && \
       git clone https://github.com/CESNET/Netopeer2.git && \
-      git clone https://github.com/Igalia/snabb.git
+      git clone https://github.com/Igalia/snabb.git && \
+	  git clone https://github.com/sysrepo/sysrepo-snabb-plugin.git
 
 # wget libssh
 RUN \
