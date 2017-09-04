@@ -35,7 +35,6 @@ mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
 git checkout libyang_master_commit && \
-git checkout db75b4e579a1ecd622e9ce80ea2baf0020d7114b && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -96,11 +95,18 @@ cd /opt/dev/Netopeer2/server && \
 git fetch origin && \
 git rebase origin/master && \
 git checkout netopeer2_master_commit && \
+git remote add sartura https://github.com/sartura/Netopeer2.git && \
+git fetch sartura && \
+git checkout iter_fix_master && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
 make install && \
+sysrepoctl -d tls-listen -m ietf-netconf-server && \
+sysrepoctl -d tls-call-home -m ietf-netconf-server && \
+sysrepoctl -d ssh-call-home -m ietf-netconf-server && \
+sysrepoctl -d call-home -m ietf-netconf-server && \
 ldconfig
 
 # netopeer2 cli
@@ -117,6 +123,7 @@ ldconfig
 ####################################### compile Igalia AFTR
 cd /var/lib/vmfactory/files/snabb && \
 git fetch origin && \
+git checkout release-v2017.07.01 && \
 make -j2 && \
 make install && \
 mkdir -p /opt/snabb && \
@@ -130,7 +137,7 @@ cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
 mkdir build && cd build && \
-cmake .. && \
+cmake -DPLUGIN=true -DYANG_MODEL=snabb-softwire-v2 .. && \
 make -j2 && \
 make install
 

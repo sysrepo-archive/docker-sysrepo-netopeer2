@@ -5,8 +5,8 @@ Requires=sysrepod.service
 PartOf=sysrepod.service
 
 [Service]
-Type=forking
-ExecStart=/usr/local/bin/sysrepo-plugind -l 2
+Type=simple
+ExecStart=/usr/local/bin/sysrepo-plugind -d -l 4
 PIDFile=/var/run/sysrepo-plugind.pid
 PrivateTmp=yes
 PrivateDevices=yes

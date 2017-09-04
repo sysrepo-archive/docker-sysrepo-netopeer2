@@ -1,2 +1,2 @@
 ./generate_install_script.sh
-docker build -t sysrepo/sysrepo-netopeer2:snabb_devel -f Dockerfile .
+docker build -t sysrepo/sysrepo-netopeer2:snabb_master -f Dockerfile .

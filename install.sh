@@ -34,8 +34,7 @@ cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 843a8c690e8c5db7162fb16e623037354ba0ec0e && \
-git checkout db75b4e579a1ecd622e9ce80ea2baf0020d7114b && \
+git checkout 4020635448634180485397acbefab00add8dab39 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -47,7 +46,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout e01149730b043f8c8bf60f4a148ad79de0600a7d && \
+git checkout 7aa2f18d234267403147df92c0005c871f0aa840 && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LUA_VERSION=5.1 -DGEN_PYTHON_BINDINGS=false -DENABLE_NACM=OFF .. && \
 make -j2 && \
@@ -73,7 +72,7 @@ cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout cc1b741c2133356ccf118d74a0d33aa0839f248e && \
+git checkout cea46db1edb72231c9e009d7e6d6799256676eb8 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -84,7 +83,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout bdb8cd747e6573a102b416f9e0cda76455c25ee5 && \
+git checkout 26474eda98665ddb46f72ac8ed72a14e9ac7bdb6 && \
 cd keystored && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -95,19 +94,26 @@ make install
 cd /opt/dev/Netopeer2/server && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout bdb8cd747e6573a102b416f9e0cda76455c25ee5 && \
+git checkout 26474eda98665ddb46f72ac8ed72a14e9ac7bdb6 && \
+git remote add sartura https://github.com/sartura/Netopeer2.git && \
+git fetch sartura && \
+git checkout iter_fix_master && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
 make install && \
+sysrepoctl -d tls-listen -m ietf-netconf-server && \
+sysrepoctl -d tls-call-home -m ietf-netconf-server && \
+sysrepoctl -d ssh-call-home -m ietf-netconf-server && \
+sysrepoctl -d call-home -m ietf-netconf-server && \
 ldconfig
 
 # netopeer2 cli
 cd /opt/dev/Netopeer2/cli && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout bdb8cd747e6573a102b416f9e0cda76455c25ee5 && \
+git checkout 26474eda98665ddb46f72ac8ed72a14e9ac7bdb6 && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
@@ -117,6 +123,7 @@ ldconfig
 ####################################### compile Igalia AFTR
 cd /var/lib/vmfactory/files/snabb && \
 git fetch origin && \
+git checkout release-v2017.07.01 && \
 make -j2 && \
 make install && \
 mkdir -p /opt/snabb && \
@@ -130,7 +137,7 @@ cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
 mkdir build && cd build && \
-cmake .. && \
+cmake -DPLUGIN=true -DYANG_MODEL=snabb-softwire-v2 .. && \
 make -j2 && \
 make install
 
