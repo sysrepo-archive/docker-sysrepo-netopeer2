@@ -1,5 +1,7 @@
 # Install script for r2va-node-lwaftr-xenial
 
+YANG="snabb-softwire-v1"
+
 #install scapy for health check
 
 easy_install pip
@@ -12,6 +14,7 @@ pip install scapy
 useradd -m netconf
 mkdir -p /home/netconf/.ssh
 echo "netconf:netconf" | chpasswd && adduser netconf
+
 # Clearing and setting authorized ssh keys ##############################
 echo '' > /home/netconf/.ssh/authorized_keys
 ssh-keygen -A
@@ -48,7 +51,7 @@ git fetch origin && \
 git rebase origin/master && \
 git checkout 7aa2f18d234267403147df92c0005c871f0aa840 && \
 mkdir build && cd build && \
-cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LUA_VERSION=5.1 -DGEN_PYTHON_BINDINGS=false -DENABLE_NACM=OFF .. && \
+cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF .. && \
 make -j2 && \
 make install && \
 ldconfig
@@ -60,13 +63,12 @@ cd /opt/dev && \
 tar xvfJ libssh-0.7.3.tar.xz && \
 cd libssh-0.7.3 && \
 mkdir build && cd build && \
-cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Debug .. && \
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
 make install
 
 
 # libnetconfd2 ###################################
-
 cp -R /var/lib/vmfactory/files/libnetconf2 /opt/dev
 cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
@@ -92,8 +94,6 @@ make install
 
 # netopeer2 server
 cd /opt/dev/Netopeer2/server && \
-git fetch origin && \
-git rebase origin/master && \
 git checkout 26474eda98665ddb46f72ac8ed72a14e9ac7bdb6 && \
 git remote add sartura https://github.com/sartura/Netopeer2.git && \
 git fetch sartura && \
@@ -111,8 +111,6 @@ ldconfig
 
 # netopeer2 cli
 cd /opt/dev/Netopeer2/cli && \
-git fetch origin && \
-git rebase origin/master && \
 git checkout 26474eda98665ddb46f72ac8ed72a14e9ac7bdb6 && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -123,11 +121,15 @@ ldconfig
 ####################################### compile Igalia AFTR
 cd /var/lib/vmfactory/files/snabb && \
 git fetch origin && \
-git checkout release-v2017.07.01 && \
+if [ "$YANG" == "snabb-softwire-v1" ]; then
+	git checkout v3.1.9
+elif [ "$YANG" == "snabb-softwire-v2" ]; then
+	git checkout release-v2017.07.01
+fi && \
 make -j2 && \
 make install && \
 mkdir -p /opt/snabb && \
-cp -r /var/lib/vmfactory/files/snabb/* /opt/snabb
+cp -r /var/lib/vmfactory/files/snabb /opt
 
 ###########################################
 
@@ -137,19 +139,15 @@ cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
 mkdir build && cd build && \
-cmake -DPLUGIN=true -DYANG_MODEL=snabb-softwire-v2 .. && \
+cmake -DPLUGIN=true -DYANG_MODEL="$YANG" .. && \
 make -j2 && \
 make install
 
-## copying/installing yang model from snabb to sysrepo
-#sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v1.yang
-sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v2.yang
-
-#update-rc.d lwaftr defaults 80
-#update-rc.d netconf defaults 10
-#update-rc.d netconflua defaults 99
-#update-rc.d exabgp defaults 99
-#update-rc.d lwaftrcontrol defaults 80
+if [ "$YANG" == "snabb-softwire-v1" ]; then
+	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v1.yang
+elif [ "$YANG" == "snabb-softwire-v2" ]; then
+	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v2.yang
+fi
 
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
 
