@@ -14,5 +14,5 @@ COMMIT=$(git ls-remote https://github.com/CESNET/libnetconf2.git --heads devel |
 sed -i "s/libnetconf2_master_commit/${COMMIT}/" ./install.sh
 
 # fetch latest git commit netopeer2
-COMMIT=$(git ls-remote https://github.com/CESNET/Netopeer2.git --heads devel | cut -f1)
+COMMIT=$(git ls-remote https://github.com/CESNET/Netopeer2.git --heads devel-server | cut -f1)
 sed -i "s/netopeer2_master_commit/${COMMIT}/" ./install.sh

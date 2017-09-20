@@ -1,6 +1,6 @@
 # Install script for r2va-node-lwaftr-xenial
 
-YANG="snabb-softwire-v1"
+YANG="snabb-softwire-v2"
 
 #install scapy for health check
 
@@ -95,18 +95,11 @@ make install
 # netopeer2 server
 cd /opt/dev/Netopeer2/server && \
 git checkout netopeer2_master_commit && \
-git remote add sartura https://github.com/sartura/Netopeer2.git && \
-git fetch sartura && \
-git checkout iter_fix_master && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
 make install && \
-sysrepoctl -d tls-listen -m ietf-netconf-server && \
-sysrepoctl -d tls-call-home -m ietf-netconf-server && \
-sysrepoctl -d ssh-call-home -m ietf-netconf-server && \
-sysrepoctl -d call-home -m ietf-netconf-server && \
 ldconfig
 
 # netopeer2 cli
@@ -125,6 +118,8 @@ if [ "$YANG" == "snabb-softwire-v1" ]; then
 	git checkout v3.1.9
 elif [ "$YANG" == "snabb-softwire-v2" ]; then
 	git checkout release-v2017.07.01
+elif [ "$YANG" == "ietf-softwire" ]; then
+	git rebase origin/lwaftr
 fi && \
 make -j2 && \
 make install && \
@@ -147,6 +142,12 @@ if [ "$YANG" == "snabb-softwire-v1" ]; then
 	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v1.yang
 elif [ "$YANG" == "snabb-softwire-v2" ]; then
 	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v2.yang
+elif [ "$YANG" == "ietf-softwire" ]; then
+	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/ietf-softwire.yang
+	sysrepoctl -e binding -m ietf-softwire
+	sysrepoctl -e br -m ietf-softwire
+	sysrepoctl -e ce -m ietf-softwire
+	sysrepoctl -e algorithm -m ietf-softwire
 fi
 
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
