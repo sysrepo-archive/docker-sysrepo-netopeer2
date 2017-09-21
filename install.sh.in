@@ -146,8 +146,6 @@ elif [ "$YANG" == "ietf-softwire" ]; then
 	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/ietf-softwire.yang
 	sysrepoctl -e binding -m ietf-softwire
 	sysrepoctl -e br -m ietf-softwire
-	sysrepoctl -e ce -m ietf-softwire
-	sysrepoctl -e algorithm -m ietf-softwire
 fi
 
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
