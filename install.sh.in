@@ -117,7 +117,7 @@ git fetch origin && \
 if [ "$YANG" == "snabb-softwire-v1" ]; then
 	git checkout v3.1.9
 elif [ "$YANG" == "snabb-softwire-v2" ]; then
-	git checkout release-v2017.07.01
+	git checkout v2017.08.02
 elif [ "$YANG" == "ietf-softwire" ]; then
 	git rebase origin/lwaftr
 fi && \
