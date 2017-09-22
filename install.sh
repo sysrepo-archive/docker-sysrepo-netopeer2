@@ -134,13 +134,15 @@ cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
 mkdir build && cd build && \
-if [ "$YANG" == "snabb-softwire-v1" ]; then
-	cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=1 ..
-elif [ "$YANG" == "snabb-softwire-v2" ]; then
-	cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
-elif [ "$YANG" == "ietf-softwire" ]; then
-	cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
-fi && \
+{
+	if [ "$YANG" == "snabb-softwire-v1" ]; then
+		cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=1 ..
+	elif [ "$YANG" == "snabb-softwire-v2" ]; then
+		cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
+	elif [ "$YANG" == "ietf-softwire" ]; then
+		cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
+	fi
+} && \
 make -j2 && \
 make install
 
