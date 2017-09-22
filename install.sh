@@ -37,7 +37,7 @@ cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout b92d68bce501dfcef7e17157da563b68fc79b059 && \
+git checkout cfc7cf5767b0ca62f89d927683b2284bd3189a7c && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -49,7 +49,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 048a83bb1f039bc62f9249280de7a2d23f23cb30 && \
+git checkout 6930b4a8124950d2bf48734ca8daf55d4e363c4e && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF  .. && \
 make -j2 && \
@@ -74,7 +74,7 @@ cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 939476f66bdf70f45b143ca9eba3a48fbd6efb3f && \
+git checkout c51d446f33b14bbbc3303f4a9474737cdda0fd52 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -85,7 +85,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 619e2a92f9ce61dc742a14059e8452dd53877001 && \
+git checkout 831b37ce82b62888bc7a8d97d5bd534a38cf0d1c && \
 cd keystored && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -94,7 +94,7 @@ make install
 
 # netopeer2 server
 cd /opt/dev/Netopeer2/server && \
-git checkout 619e2a92f9ce61dc742a14059e8452dd53877001 && \
+git checkout 831b37ce82b62888bc7a8d97d5bd534a38cf0d1c && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -104,7 +104,7 @@ ldconfig
 
 # netopeer2 cli
 cd /opt/dev/Netopeer2/cli && \
-git checkout 619e2a92f9ce61dc742a14059e8452dd53877001 && \
+git checkout 831b37ce82b62888bc7a8d97d5bd534a38cf0d1c && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
@@ -134,7 +134,13 @@ cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
 mkdir build && cd build && \
-cmake -DPLUGIN=true -DYANG_MODEL="$YANG" .. && \
+if [ "$YANG" == "snabb-softwire-v1" ]; then
+	cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=1 ..
+elif [ "$YANG" == "snabb-softwire-v2" ]; then
+	cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
+elif [ "$YANG" == "ietf-softwire" ]; then
+	cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
+fi && \
 make -j2 && \
 make install
 
@@ -146,8 +152,6 @@ elif [ "$YANG" == "ietf-softwire" ]; then
 	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/ietf-softwire.yang
 	sysrepoctl -e binding -m ietf-softwire
 	sysrepoctl -e br -m ietf-softwire
-	sysrepoctl -e ce -m ietf-softwire
-	sysrepoctl -e algorithm -m ietf-softwire
 fi
 
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
