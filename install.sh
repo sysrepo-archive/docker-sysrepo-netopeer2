@@ -37,7 +37,7 @@ cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout cfc7cf5767b0ca62f89d927683b2284bd3189a7c && \
+git checkout 4b1d964e8ff1fc101131bdfb8ce0241e906d0709 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -49,7 +49,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 6930b4a8124950d2bf48734ca8daf55d4e363c4e && \
+git checkout 0b36f308574a60d7ee36b1a3118b999618bb40d8 && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF  .. && \
 make -j2 && \
@@ -74,7 +74,7 @@ cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout c51d446f33b14bbbc3303f4a9474737cdda0fd52 && \
+git checkout 2a7c9ca1b7c4a92f2d1d4ba62a7ca168810e1756 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -85,7 +85,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 831b37ce82b62888bc7a8d97d5bd534a38cf0d1c && \
+git checkout 7a36c933fa2bc15807ca953dc2922278302d59eb && \
 cd keystored && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -94,7 +94,7 @@ make install
 
 # netopeer2 server
 cd /opt/dev/Netopeer2/server && \
-git checkout 831b37ce82b62888bc7a8d97d5bd534a38cf0d1c && \
+git checkout 7a36c933fa2bc15807ca953dc2922278302d59eb && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -104,7 +104,7 @@ ldconfig
 
 # netopeer2 cli
 cd /opt/dev/Netopeer2/cli && \
-git checkout 831b37ce82b62888bc7a8d97d5bd534a38cf0d1c && \
+git checkout 7a36c933fa2bc15807ca953dc2922278302d59eb && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
