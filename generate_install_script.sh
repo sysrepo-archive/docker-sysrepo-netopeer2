@@ -16,3 +16,7 @@ sed -i "s/libnetconf2_master_commit/${COMMIT}/" ./install.sh
 # fetch latest git commit netopeer2
 COMMIT=$(git ls-remote https://github.com/CESNET/Netopeer2.git --heads master | cut -f1)
 sed -i "s/netopeer2_master_commit/${COMMIT}/" ./install.sh
+
+# fetch latest git commit netopeer2
+COMMIT=$(git ls-remote https://github.com/sysrepo/sysrepo-snabb-plugin.git --heads master | cut -f1)
+sed -i "s/snabb_plugin_master_commit/${COMMIT}/" ./install.sh

@@ -133,6 +133,7 @@ cp -R /var/lib/vmfactory/files/sysrepo-snabb-plugin /opt/dev
 cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
+git checkout snabb_plugin_master_commit && \
 mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then

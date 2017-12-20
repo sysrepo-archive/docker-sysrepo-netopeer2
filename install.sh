@@ -37,7 +37,7 @@ cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 4b1d964e8ff1fc101131bdfb8ce0241e906d0709 && \
+git checkout 2698bd6484526facbf82b1263810b938b82a2f23 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -49,7 +49,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 0b36f308574a60d7ee36b1a3118b999618bb40d8 && \
+git checkout 8a188c515ad113adbe0d393fe54dc0cad2d0167a && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF  .. && \
 make -j2 && \
@@ -74,7 +74,7 @@ cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 2a7c9ca1b7c4a92f2d1d4ba62a7ca168810e1756 && \
+git checkout bd93b091d6e4414283c6c764dc451aee61e09997 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -85,7 +85,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 7a36c933fa2bc15807ca953dc2922278302d59eb && \
+git checkout ae560bef2e70d274f6d028b59e3cb398ea2a621d && \
 cd keystored && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -94,7 +94,7 @@ make install
 
 # netopeer2 server
 cd /opt/dev/Netopeer2/server && \
-git checkout 7a36c933fa2bc15807ca953dc2922278302d59eb && \
+git checkout ae560bef2e70d274f6d028b59e3cb398ea2a621d && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -104,7 +104,7 @@ ldconfig
 
 # netopeer2 cli
 cd /opt/dev/Netopeer2/cli && \
-git checkout 7a36c933fa2bc15807ca953dc2922278302d59eb && \
+git checkout ae560bef2e70d274f6d028b59e3cb398ea2a621d && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
@@ -133,6 +133,7 @@ cp -R /var/lib/vmfactory/files/sysrepo-snabb-plugin /opt/dev
 cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
+git checkout d4bf1401289963f027fbb8d694bc07bb0588d7ab && \
 mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then
