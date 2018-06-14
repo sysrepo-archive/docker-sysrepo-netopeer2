@@ -117,9 +117,11 @@ git fetch origin && \
 if [ "$YANG" == "snabb-softwire-v1" ]; then
 	git checkout v3.1.9
 elif [ "$YANG" == "snabb-softwire-v2" ]; then
-	git checkout v2017.08.02
+	git checkout master
 elif [ "$YANG" == "ietf-softwire" ]; then
-	git rebase origin/lwaftr
+	git checkout master
+elif [ "$YANG" == "ietf-softwire-br" ]; then
+	git checkout master
 fi && \
 make -j2 && \
 make install && \
@@ -138,9 +140,7 @@ mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then
 		cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=1 ..
-	elif [ "$YANG" == "snabb-softwire-v2" ]; then
-		cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
-	elif [ "$YANG" == "ietf-softwire" ]; then
+	else
 		cmake -DPLUGIN=true -DYANG_MODEL="$YANG" -DLEAF_LIST=0 ..
 	fi
 } && \
@@ -155,6 +155,10 @@ elif [ "$YANG" == "ietf-softwire" ]; then
 	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/ietf-softwire.yang
 	sysrepoctl -e binding -m ietf-softwire
 	sysrepoctl -e br -m ietf-softwire
+elif [ "$YANG" == "ietf-softwire-br" ]; then
+	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/ietf-softwire-br.yang
+	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/ietf-softwire-common.yang
+	sysrepoctl -e binding -m ietf-softwire-br
 fi
 
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
