@@ -86,7 +86,7 @@ RUN \
       bash /opt/scripts/install.sh
 
 RUN \
-      mkdir /opt/snabb/conf
+      mkdir -p /opt/snabb/conf
 
 COPY \
       ./scripts/lwaftrsysrepolua.sh /opt/snabb/conf

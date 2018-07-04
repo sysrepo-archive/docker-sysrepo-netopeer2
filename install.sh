@@ -1,4 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
 # Install script for r2va-node-lwaftr-xenial
+
+# Maximum number of children nodes (of any parent node) being fetched in one message from Sysrepo Engine when processing sr_get_subtree(s)_*_chunk(s). Increasing this can improve efficiency when working with large datastores at the cost of higher memory usage peaks.
+SUBTREE_LIMIT=100
+# Number of items being fetched in one message from Sysrepo Engine when processing sr_get_items_iter calls. Increasing this can improve efficiency when working with large datastores at the cost of higher memory usage peaks.
+FETCH_LIMIT=1000000
+# timeout in seconds for all timeouts
+TIMEOUT=1200
 
 YANG="snabb-softwire-v2"
 
@@ -12,8 +23,8 @@ pip install scapy
 
 # Adding netconf user ####################################################
 useradd -m netconf
+echo "netconf:netconf" | chpasswd
 mkdir -p /home/netconf/.ssh
-echo "netconf:netconf" | chpasswd && adduser netconf
 
 # Clearing and setting authorized ssh keys ##############################
 echo '' > /home/netconf/.ssh/authorized_keys
@@ -37,7 +48,7 @@ cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 8968f40d26d38de6182981269338c9b567eef578 && \
+git checkout f77877617535c402cf0ae7c5b68407c48e40d0eb && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -51,7 +62,10 @@ git fetch origin && \
 git rebase origin/master && \
 git checkout 724a62fa830df7fcb2736b1ec41b320abe5064d2 && \
 mkdir build && cd build && \
-cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF  .. && \
+cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF \
+-DREQUEST_TIMEOUT="$TIMEOUT" -DCOMMIT_VERIFY_TIMEOUT="$TIMEOUT" -DOPER_DATA_PROVIDE_TIMEOUT="$TIMEOUT" -DNOTIF_TIME_WINDOW="$TIMEOUT" \
+-DGET_ITEMS_FETCH_LIMIT="$FETCH_LIMIT" -DGET_SUBTREE_CHUNK_CHILD_LIMIT="$SUBTREE_LIMIT" \
+.. && \
 make -j2 && \
 make install && \
 ldconfig
@@ -74,8 +88,10 @@ cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 46d56e08b161eb60f37410dae4d5e1a8a1bedd58 && \
-cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
+git checkout f7033524cd8dde13c31cb6949948e022f294dc7d && \
+cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF \
+-DREAD_INACTIVE_TIMEOUT="$TIMEOUT" -DREAD_ACTIVE_TIMEOUT="$TIMEOUT" \
+.. && \
 make -j2 && \
 make install && \
 ldconfig
@@ -85,7 +101,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 88811f1e4dbbeb57fe11d6e5536872f9e9ac7b03 && \
+git checkout b1a450f6bbebbd95f5ece431c77d6fec9d256fbb && \
 cd keystored && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -94,7 +110,7 @@ make install
 
 # netopeer2 server
 cd /opt/dev/Netopeer2/server && \
-git checkout 88811f1e4dbbeb57fe11d6e5536872f9e9ac7b03 && \
+git checkout b1a450f6bbebbd95f5ece431c77d6fec9d256fbb && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -104,7 +120,7 @@ ldconfig
 
 # netopeer2 cli
 cd /opt/dev/Netopeer2/cli && \
-git checkout 88811f1e4dbbeb57fe11d6e5536872f9e9ac7b03 && \
+git checkout b1a450f6bbebbd95f5ece431c77d6fec9d256fbb && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
@@ -112,21 +128,21 @@ make install && \
 ldconfig
 
 ####################################### compile Igalia AFTR
-cd /var/lib/vmfactory/files/snabb && \
-git fetch origin && \
+cp -r /var/lib/vmfactory/files/snabb /opt
+cd /opt/snabb
+git fetch origin
 if [ "$YANG" == "snabb-softwire-v1" ]; then
 	git checkout v3.1.9
 elif [ "$YANG" == "snabb-softwire-v2" ]; then
-	git checkout master
+	git checkout lwaftr
 elif [ "$YANG" == "ietf-softwire" ]; then
-	git checkout master
+	git checkout lwaftr
 elif [ "$YANG" == "ietf-softwire-br" ]; then
-	git checkout master
+	git checkout lwaftr
 fi
-make -j2 && \
-make install && \
-mkdir -p /opt/snabb && \
-cp -r /var/lib/vmfactory/files/snabb/* /opt/snabb/
+echo "build snabb"
+cd /opt/snabb && make -j2
+cd /opt/snabb && make install
 
 ###########################################
 
@@ -164,9 +180,9 @@ fi
 echo "export PATH=\$PATH:/opt/scripts" >> /root/.bashrc
 
 touch /var/log/exabgp.log
-chown dtadmin:dtadmin /var/log/exabgp.log
+#chown dtadmin:dtadmin /var/log/exabgp.log
 touch /var/log/exabgphealthcheck.log
-chown dtadmin:dtadmin /var/log/exabgphealthcheck.log
+#chown dtadmin:dtadmin /var/log/exabgphealthcheck.log
 
 systemctl enable sysrepod.service
 systemctl enable sysrepo-plugind.service
