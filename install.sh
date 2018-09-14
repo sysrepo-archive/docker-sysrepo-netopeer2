@@ -48,7 +48,7 @@ cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout f77877617535c402cf0ae7c5b68407c48e40d0eb && \
+git checkout 0e701c1418c33fcfda43c8fcf47b7b961b2c7289 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -60,7 +60,7 @@ cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 724a62fa830df7fcb2736b1ec41b320abe5064d2 && \
+git checkout 3b9734714c70e443c4be6a55b6c997b6a7d07857 && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF \
 -DREQUEST_TIMEOUT="$TIMEOUT" -DCOMMIT_VERIFY_TIMEOUT="$TIMEOUT" -DOPER_DATA_PROVIDE_TIMEOUT="$TIMEOUT" -DNOTIF_TIME_WINDOW="$TIMEOUT" \
@@ -72,10 +72,10 @@ ldconfig
 
 
 # libssh-dev ####################################
-cp -R /var/lib/vmfactory/files/red.libssh.org/attachments/download/195/libssh-0.7.3.tar.xz /opt/dev
+cp -R /var/lib/vmfactory/files/red.libssh.org/attachments/download/195/libssh-0.7.4.tar.xz /opt/dev
 cd /opt/dev && \
-tar xvfJ libssh-0.7.3.tar.xz && \
-cd libssh-0.7.3 && \
+tar xvfJ libssh-0.7.4.tar.xz && \
+cd libssh-0.7.4 && \
 mkdir build && cd build && \
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
@@ -88,7 +88,7 @@ cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout f7033524cd8dde13c31cb6949948e022f294dc7d && \
+git checkout d5f877d1bba85322cccfa3e8af971d8d1f41c4c8 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF \
 -DREAD_INACTIVE_TIMEOUT="$TIMEOUT" -DREAD_ACTIVE_TIMEOUT="$TIMEOUT" \
 .. && \
@@ -101,7 +101,7 @@ cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout b1a450f6bbebbd95f5ece431c77d6fec9d256fbb && \
+git checkout ca0256d4003c61781116e2a916e0c72a9e35ef8e && \
 cd keystored && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -110,7 +110,7 @@ make install
 
 # netopeer2 server
 cd /opt/dev/Netopeer2/server && \
-git checkout b1a450f6bbebbd95f5ece431c77d6fec9d256fbb && \
+git checkout ca0256d4003c61781116e2a916e0c72a9e35ef8e && \
 sed -i '/\<address\>/ s/0.0.0.0/\:\:/' ./stock_config.xml && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
@@ -120,7 +120,7 @@ ldconfig
 
 # netopeer2 cli
 cd /opt/dev/Netopeer2/cli && \
-git checkout b1a450f6bbebbd95f5ece431c77d6fec9d256fbb && \
+git checkout ca0256d4003c61781116e2a916e0c72a9e35ef8e && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
@@ -151,7 +151,6 @@ cp -R /var/lib/vmfactory/files/sysrepo-snabb-plugin /opt/dev
 cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout 2cedae8685c2b73148144a8644f43ec8c7ec288c && \
 mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then
@@ -162,6 +161,8 @@ mkdir build && cd build && \
 } && \
 make -j2 && \
 make install
+
+echo "finish"
 
 if [ "$YANG" == "snabb-softwire-v1" ]; then
 	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v1.yang

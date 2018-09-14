@@ -72,10 +72,10 @@ ldconfig
 
 
 # libssh-dev ####################################
-cp -R /var/lib/vmfactory/files/red.libssh.org/attachments/download/195/libssh-0.7.3.tar.xz /opt/dev
+cp -R /var/lib/vmfactory/files/red.libssh.org/attachments/download/195/libssh-0.7.4.tar.xz /opt/dev
 cd /opt/dev && \
-tar xvfJ libssh-0.7.3.tar.xz && \
-cd libssh-0.7.3 && \
+tar xvfJ libssh-0.7.4.tar.xz && \
+cd libssh-0.7.4 && \
 mkdir build && cd build && \
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE:String="Release" .. && \
 make -j2 && \
@@ -151,7 +151,6 @@ cp -R /var/lib/vmfactory/files/sysrepo-snabb-plugin /opt/dev
 cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
 git rebase origin/master && \
-git checkout snabb_plugin_master_commit && \
 mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then
@@ -162,6 +161,8 @@ mkdir build && cd build && \
 } && \
 make -j2 && \
 make install
+
+echo "finish"
 
 if [ "$YANG" == "snabb-softwire-v1" ]; then
 	sysrepoctl --install --yang=/opt/snabb/src/lib/yang/snabb-softwire-v1.yang

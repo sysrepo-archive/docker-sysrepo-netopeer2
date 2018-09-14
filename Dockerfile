@@ -48,9 +48,9 @@ RUN \
       apt-get install -y wget && \
       mkdir -p /var/lib/vmfactory/files/red.libssh.org/attachments/download/195 && \
       cd /var/lib/vmfactory/files/red.libssh.org/attachments/download/195 && \
-	  echo "skip"#wget https://red.libssh.org/attachments/download/195/libssh-0.7.3.tar.xz
+	  echo "skip"#wget https://red.libssh.org/attachments/download/195/libssh-0.7.4.tar.xz
 
-COPY libssh-0.7.3.tar.xz /var/lib/vmfactory/files/red.libssh.org/attachments/download/195
+COPY libssh-0.7.4.tar.xz /var/lib/vmfactory/files/red.libssh.org/attachments/download/195
 
 # setup systemd
 ENV \
