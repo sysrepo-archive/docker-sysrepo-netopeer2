@@ -47,8 +47,7 @@ cp -R /var/lib/vmfactory/files/libyang /opt/dev
 cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
-git rebase origin/master && \
-git checkout 0e701c1418c33fcfda43c8fcf47b7b961b2c7289 && \
+git checkout a62d614cc28b12cf8fdd6a5c1f7e28a663cfa6a0 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -59,7 +58,6 @@ ldconfig
 cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo && \
 git fetch origin && \
-git rebase origin/master && \
 git checkout 3b9734714c70e443c4be6a55b6c997b6a7d07857 && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF \
@@ -87,7 +85,6 @@ cp -R /var/lib/vmfactory/files/libnetconf2 /opt/dev
 cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
-git rebase origin/master && \
 git checkout d5f877d1bba85322cccfa3e8af971d8d1f41c4c8 && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF \
 -DREAD_INACTIVE_TIMEOUT="$TIMEOUT" -DREAD_ACTIVE_TIMEOUT="$TIMEOUT" \
@@ -100,7 +97,6 @@ ldconfig
 cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
-git rebase origin/master && \
 git checkout ca0256d4003c61781116e2a916e0c72a9e35ef8e && \
 cd keystored && \
 mkdir build && cd build && \
@@ -150,7 +146,6 @@ cd /opt/snabb && make install
 cp -R /var/lib/vmfactory/files/sysrepo-snabb-plugin /opt/dev
 cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
-git rebase origin/master && \
 mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then

@@ -47,7 +47,6 @@ cp -R /var/lib/vmfactory/files/libyang /opt/dev
 cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
-git rebase origin/master && \
 git checkout libyang_master_commit && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
@@ -59,7 +58,6 @@ ldconfig
 cp -R /var/lib/vmfactory/files/sysrepo /opt/dev
 cd /opt/dev/sysrepo && \
 git fetch origin && \
-git rebase origin/master && \
 git checkout sysrepo_master_commit && \
 mkdir build && cd build && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_TESTS=OFF -DREPOSITORY_LOC:PATH=/etc/sysrepo -DGEN_LANGUAGE_BINDINGS=OFF -DENABLE_NACM=OFF \
@@ -87,7 +85,6 @@ cp -R /var/lib/vmfactory/files/libnetconf2 /opt/dev
 cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
-git rebase origin/master && \
 git checkout libnetconf2_master_commit && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF \
 -DREAD_INACTIVE_TIMEOUT="$TIMEOUT" -DREAD_ACTIVE_TIMEOUT="$TIMEOUT" \
@@ -100,7 +97,6 @@ ldconfig
 cp -R /var/lib/vmfactory/files/Netopeer2 /opt/dev
 cd /opt/dev/Netopeer2 && \
 git fetch origin && \
-git rebase origin/master && \
 git checkout netopeer2_master_commit && \
 cd keystored && \
 mkdir build && cd build && \
@@ -150,7 +146,6 @@ cd /opt/snabb && make install
 cp -R /var/lib/vmfactory/files/sysrepo-snabb-plugin /opt/dev
 cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
-git rebase origin/master && \
 mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then
