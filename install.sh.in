@@ -15,7 +15,6 @@ YANG="snabb-softwire-v2"
 
 #install scapy for health check
 
-easy_install pip
 pip install exabgp
 pip install ipaddr
 pip install scapy
@@ -68,17 +67,9 @@ make -j2 && \
 make install && \
 ldconfig
 
-
-# libssh-dev ####################################
-cp -R /var/lib/vmfactory/files/red.libssh.org/attachments/download/195/libssh-0.7.4.tar.xz /opt/dev
-cd /opt/dev && \
-tar xvfJ libssh-0.7.4.tar.xz && \
-cd libssh-0.7.4 && \
-mkdir build && cd build && \
-cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE:String="Release" .. && \
-make -j2 && \
-make install
-
+# libssh #####################################
+apt-get update
+apt-get install -y libssh-dev
 
 # libnetconfd2 ###################################
 cp -R /var/lib/vmfactory/files/libnetconf2 /opt/dev
