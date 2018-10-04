@@ -46,7 +46,7 @@ cp -R /var/lib/vmfactory/files/libyang /opt/dev
 cd /opt/dev/libyang && \
 mkdir build && cd build && \
 git fetch origin && \
-git checkout 7688d58ad984e1209880bb3dfc601b72f721b4dd && \
+git checkout 6341aeaeacde15eedccd2a52b04886a329527cdc && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF .. && \
 make -j2 && \
 make install && \
@@ -76,7 +76,7 @@ cp -R /var/lib/vmfactory/files/libnetconf2 /opt/dev
 cd /opt/dev/libnetconf2 && \
 mkdir build && cd build && \
 git fetch origin && \
-git checkout e466662d58a36813257c42525abce79ae1d1a272 && \
+git checkout 9662233950fc16d91c2a84597296f9d42ce4fb8b && \
 cmake -DCMAKE_BUILD_TYPE:String="Release" -DENABLE_BUILD_TESTS=OFF \
 -DREAD_INACTIVE_TIMEOUT="$TIMEOUT" -DREAD_ACTIVE_TIMEOUT="$TIMEOUT" \
 .. && \
@@ -137,6 +137,7 @@ cd /opt/snabb && make install
 cp -R /var/lib/vmfactory/files/sysrepo-snabb-plugin /opt/dev
 cd /opt/dev/sysrepo-snabb-plugin && \
 git fetch origin && \
+git checkout master && \
 mkdir build && cd build && \
 {
 	if [ "$YANG" == "snabb-softwire-v1" ]; then
